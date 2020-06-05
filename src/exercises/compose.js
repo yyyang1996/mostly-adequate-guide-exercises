@@ -34,6 +34,8 @@ var CARS = [
   },
 ]
 
+/**************************************************/
+
 // 练习 1:
 // ============
 // 使用 _.compose() 重写下面这个函数。提示：_.prop() 是 curry 函数
@@ -42,13 +44,25 @@ var isLastInStock = function (cars) {
   return _.prop('in_stock', last_car)
 }
 
+// resolution
+// ============
 const _isLastInStock = compose(_.prop('in_stock'), _.last)
+
+/**************************************************/
+
+/**************************************************/
 
 // 练习 2:
 // ============
 // 使用 _.compose()、_.prop() 和 _.head() 获取第一个 car 的 name
+
+// resolution
+// ============
 var nameOfFirstCar = compose(_.prop('name'), _.head)
 
+/**************************************************/
+
+/**************************************************/
 // 练习 3:
 // ============
 // 使用帮助函数 _average 重构 averageDollarValue 使之成为一个组合
@@ -63,15 +77,28 @@ var averageDollarValue = function (cars) {
   return _average(dollar_values)
 }
 
+// resolution
+// ============
 const _averageDollarValue = compose(_average, _.map(_.prop('dollar_value')))
+
+/**************************************************/
+
+/**************************************************/
 
 // 练习 4:
 // ============
 // 使用 compose 写一个 sanitizeNames() 函数，返回一个下划线连接的小写字符串：例如：sanitizeNames(["Hello World"]) //=> ["hello_world"]。
 
 var _underscore = replace(/\W+/g, '_') //<-- 无须改动，并在 sanitizeNames 中使用它
+
+// resolution
+// ============
 const lowercase = (str) => str.toLowerCase()
 var sanitizeNames = _.map(compose(_underscore, lowercase))
+
+/**************************************************/
+
+/**************************************************/
 
 // 彩蛋 1:
 // ============
@@ -86,11 +113,18 @@ var availablePrices = function (cars) {
     .join(', ')
 }
 
+// resolution
+// ============
+
 const _availablePrices = compose(
   _.join(', '),
   _.map(compose(accounting.formatMoney, _.prop('dollar_value'))),
   _.filter(_.prop('in_stock'))
 )
+
+/**************************************************/
+
+/**************************************************/
 
 // 彩蛋 2:
 // ============
@@ -104,8 +138,11 @@ var fastestCar = function (cars) {
   return fastest.name + ' is the fastest'
 }
 
+// resolution
+// ============
 const _fastestCar = compose(
   _.flip(_.concat(' is the fastest')),
   _.last,
   _.sortBy(_.prop('horsepower'))
 )
+/**************************************************/
